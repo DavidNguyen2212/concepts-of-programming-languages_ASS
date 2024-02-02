@@ -1,0 +1,8 @@
+
+func t1G ()	begin
+	end
+
+##  baDu
+## *
+func kp6w (string fw[42.062e85,310,223.354e35])	return 8.062
+

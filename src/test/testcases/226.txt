@@ -1,0 +1,6 @@
+
+func Tv5d ()
+	return
+func Ixo ()	return "'""
+
+var Al <- 3.331E-31

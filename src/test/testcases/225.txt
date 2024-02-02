@@ -1,0 +1,8 @@
+
+string nn <- 455.075
+func DI0 (var byTm[8.436e+60,949.253,8], var d3Z[1.604,560.976E-19,2.160e+55])	begin
+		number loR2 <- Aj3l
+		## %-&q>#c
+		## Zd
+	end
+

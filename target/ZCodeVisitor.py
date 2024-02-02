@@ -34,13 +34,13 @@ class ZCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ZCodeParser#var_decl.
-    def visitVar_decl(self, ctx:ZCodeParser.Var_declContext):
+    # Visit a parse tree produced by ZCodeParser#norm_decl.
+    def visitNorm_decl(self, ctx:ZCodeParser.Norm_declContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ZCodeParser#imp_var_decl.
-    def visitImp_var_decl(self, ctx:ZCodeParser.Imp_var_declContext):
+    # Visit a parse tree produced by ZCodeParser#var_decl.
+    def visitVar_decl(self, ctx:ZCodeParser.Var_declContext):
         return self.visitChildren(ctx)
 
 
@@ -194,23 +194,13 @@ class ZCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ZCodeParser#value_type.
-    def visitValue_type(self, ctx:ZCodeParser.Value_typeContext):
+    # Visit a parse tree produced by ZCodeParser#scalar_type.
+    def visitScalar_type(self, ctx:ZCodeParser.Scalar_typeContext):
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by ZCodeParser#array_list.
     def visitArray_list(self, ctx:ZCodeParser.Array_listContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#list_arr_literal.
-    def visitList_arr_literal(self, ctx:ZCodeParser.List_arr_literalContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#exp_list.
-    def visitExp_list(self, ctx:ZCodeParser.Exp_listContext):
         return self.visitChildren(ctx)
 
 
@@ -234,8 +224,8 @@ class ZCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ZCodeParser#write.
-    def visitWrite(self, ctx:ZCodeParser.WriteContext):
+    # Visit a parse tree produced by ZCodeParser#writeBool.
+    def visitWriteBool(self, ctx:ZCodeParser.WriteBoolContext):
         return self.visitChildren(ctx)
 
 

@@ -1,0 +1,6 @@
+
+## KCCOX
+## #<CIQ/jXx20uYWK;AH}l
+dynamic g4[60e-21] ## `C6
+func Sk (dynamic UW[45,3.930E40,49.512E+08])	return
+
