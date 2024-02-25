@@ -1,0 +1,13 @@
+
+func aBh (number ATr, bool GoTT)	begin
+	end
+
+func YPO (string iPiP, bool i2p)
+	begin
+		number xgr[38.94] <- true
+		for FS until true by zpK
+			return
+	end
+func fu7 ()
+	return 43.18
+

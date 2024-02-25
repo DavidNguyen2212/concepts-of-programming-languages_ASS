@@ -1,0 +1,1 @@
+Program([VarDecl(Id(XYTK), ArrayType([50.53, 13.62, 82.91], BoolType), None, None)])

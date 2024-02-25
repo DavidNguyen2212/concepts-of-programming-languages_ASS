@@ -1,0 +1,11 @@
+
+func QIm (bool tr[96.1,21.69,79.76], bool LvqN[22.96,92.19])	return
+
+func Ukt ()	return
+func xMf (bool f8wc[71.52], string xuCf[24.6,100.0,27.22], number Zubj[93.46,59.18,1.22])
+	begin
+	end
+bool zzlz[60.27,0.46,86.24]
+func tKf (string i3)
+	return
+

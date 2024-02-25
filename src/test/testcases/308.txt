@@ -1,3 +1,4 @@
 
-            func main()
-        
+func LZ (string RG1U[32.82], number mXU[86.87], string FID)
+	return
+

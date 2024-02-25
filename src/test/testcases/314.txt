@@ -1,4 +1,2 @@
 
-            var x <- [[1], [1]]
-            var x <- [[1]]
-        
+string sWbP[27.02,65.39] <- mobl

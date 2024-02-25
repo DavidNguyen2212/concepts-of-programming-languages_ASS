@@ -1,0 +1,1 @@
+Program([FuncDecl(Id(ez6), [VarDecl(Id(uAp), StringType, None, None), VarDecl(Id(mp), StringType, None, None)], Block([Break])), FuncDecl(Id(sl), [VarDecl(Id(k2), BoolType, None, None)], Return(Id(ghg)))])

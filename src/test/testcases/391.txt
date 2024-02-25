@@ -1,0 +1,9 @@
+
+func LOg (string VNAv[18.68,7.85,41.93], number Rp[31.88,0.13,83.92])	return
+func u7 ()
+	begin
+		return "Z"
+		begin
+			Ut8t("DN", 32.46, "gytNc")
+		end
+	end

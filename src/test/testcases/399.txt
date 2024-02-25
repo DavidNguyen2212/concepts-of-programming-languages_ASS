@@ -1,0 +1,51 @@
+
+func BG ()
+	begin
+		Z4X(true, 26.68)
+		if (true) bool V_[3.78] <- T71P
+		elif (false)
+		return 57.73
+		elif ("KEdd") continue
+		elif ("Q")
+		if (true) for kp until "xQUEG" by 56.07
+			GKl1 <- PW3
+		elif (89.58) continue
+		elif (MCEf) for E2L until "rWj" by Q5
+			if ("iZ") continue
+			elif (44.55) continue
+			elif (false)
+			number kk7V
+		elif (true)
+		if ("oKV") continue
+		else J2i6["j", "nnSc"] <- true
+		elif (0.68) vl <- true
+		elif (true) if (66.42) M6Y[false, "AYlHF"] <- "LEsgQ"
+		elif (77.39) number MB[59.33,26.38]
+		elif (68.69) continue
+		elif (true) for srRK until "Jag" by 65.64
+			if (24.33) continue
+			elif (reLS)
+			if (94.29) break
+			elif (false) gU2["q", "Lg"] <- ng
+			elif (TM)
+			for EPMk until 71.59 by "h"
+				continue
+			elif ("jUbCc") string VNB
+			elif (false) if (35.9) VV_8[true, 0.04] <- A3G
+			elif (true) return true
+			else break
+		elif (false) for wj until Mum1 by false
+			d3("rT", false, "orQZB")
+		elif (54.09) begin
+			number Ij <- "A"
+		end
+		else break
+		elif (59.79) odfP[13.2] <- 59.51
+		else Em <- b4A0
+		for SA until 71.18 by "w"
+			for mo until "fXY" by MDxx
+				break
+	end
+
+var BTwA <- true
+number Ib[32.44]

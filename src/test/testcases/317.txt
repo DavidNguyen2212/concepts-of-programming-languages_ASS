@@ -1,3 +1,11 @@
 
-            var x <- -a[1+2] ... 2
-        
+func EKd ()	begin
+	end
+
+string ZaI <- 30.59
+func scJ (number o5fS)
+	begin
+		bool l8Kd[32.65] <- "GcQ"
+	end
+
+func QCz (number FU, bool znW)	return true

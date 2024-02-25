@@ -1,0 +1,4 @@
+
+string lei
+dynamic Pf <- 45.68
+number Hzw[97.17,97.59] <- c3iL

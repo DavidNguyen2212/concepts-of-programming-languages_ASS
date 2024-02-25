@@ -1,0 +1,8 @@
+
+func KBRp (number iT, number JLCL[21.18], bool uaU[39.77])	begin
+		ipe <- "HbPV"
+		continue
+		break
+	end
+
+func onLD (bool Mq, number atz[34.11])	return 13.65

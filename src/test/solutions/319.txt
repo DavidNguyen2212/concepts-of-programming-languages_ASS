@@ -1,1 +1,1 @@
-Program([VarDecl(Id(x), None, var, CallExpr(Id(fun), [BinaryOp(+, NumLit(1.0), NumLit(1.0)), StringLit(a)]))])
+Program([VarDecl(Id(QP), ArrayType([13.25], NumberType), None, None), VarDecl(Id(Ia), ArrayType([35.74], NumberType), None, StringLit(CP)), VarDecl(Id(XC), StringType, None, None), FuncDecl(Id(gM), [VarDecl(Id(i4), NumberType, None, None), VarDecl(Id(Pjba), ArrayType([61.32, 15.44, 29.65], BoolType), None, None)], Return()), VarDecl(Id(sv), None, dynamic, None)])

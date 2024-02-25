@@ -1,1 +1,1 @@
-Program([FuncDecl(Id(main), [], Block([If((BooleanLit(True), Return(NumLit(1.0))), [(BooleanLit(True), Return(NumLit(1.0))), (BooleanLit(True), Return(NumLit(1.0)))], Return(NumLit(1.0)))]))])
+Program([VarDecl(Id(GFh), ArrayType([64.63, 72.43, 94.54], StringType), None, Id(sl)), VarDecl(Id(gd), ArrayType([46.71], StringType), None, StringLit(JY))])

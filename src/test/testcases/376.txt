@@ -1,0 +1,8 @@
+
+number Jlk <- vQj
+var nIBU <- "aqGrH"
+bool ai[50.33] <- "ro"
+func EpKg ()	begin
+		return
+		continue
+	end

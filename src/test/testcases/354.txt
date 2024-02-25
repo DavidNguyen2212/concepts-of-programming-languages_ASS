@@ -1,0 +1,8 @@
+
+func UNX8 (bool LzDC)
+	begin
+		number xI
+	end
+number oB[15.67,34.38] <- true
+dynamic HxkT
+func db (number Qq[61.32,80.24], string wnih[25.36,75.93])	return

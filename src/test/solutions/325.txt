@@ -1,1 +1,1 @@
-Program([FuncDecl(Id(main), [], Block([CallStmt(Id(main), [Id(a)]), CallStmt(Id(main), [NumLit(1.0), NumLit(1.0)])])), FuncDecl(Id(main), [], Block([CallStmt(Id(main), [])]))])
+Program([VarDecl(Id(U9), StringType, None, StringLit(VrCzn)), VarDecl(Id(da9), None, var, Id(DXT)), VarDecl(Id(lY), NumberType, None, None), FuncDecl(Id(TXy), [VarDecl(Id(dd), NumberType, None, None)], Return(NumLit(47.28)))])

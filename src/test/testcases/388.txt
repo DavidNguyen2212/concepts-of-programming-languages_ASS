@@ -1,0 +1,5 @@
+
+string TB
+string Tbl[68.86,1.33] <- 76.47
+var hE <- "khmWC"
+number T3t <- "wAez"

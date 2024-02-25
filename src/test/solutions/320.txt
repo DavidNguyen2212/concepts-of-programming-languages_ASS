@@ -1,1 +1,1 @@
-Program([VarDecl(Id(x), None, var, CallExpr(Id(fun), [CallExpr(Id(fun), [])]))])
+Program([FuncDecl(Id(hLre), [VarDecl(Id(pz), ArrayType([30.37, 28.5, 18.51], StringType), None, None)], Return(StringLit(E)))])

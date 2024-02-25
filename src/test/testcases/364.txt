@@ -1,0 +1,5 @@
+
+func GW2 (string Qfwv)	return 35.46
+string V6d2
+bool JGkL[2.68]
+func ztR ()	return false

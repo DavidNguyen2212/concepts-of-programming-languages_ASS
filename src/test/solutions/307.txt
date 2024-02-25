@@ -1,1 +1,1 @@
-Program([VarDecl(Id(Votien), None, var, NumLit(1.0))])
+Program([FuncDecl(Id(zv), [VarDecl(Id(mYVi), NumberType, None, None)], Block([CallStmt(Id(By7x), [StringLit(uVdeP), BooleanLit(True), BooleanLit(True)]), Return()]))])

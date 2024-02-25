@@ -1,6 +1,4 @@
 
-            func main()
-                begin
-                break
-                end
-        
+bool nCi[77.74,57.84]
+dynamic CS9O <- "O"
+number t9 <- Zkki

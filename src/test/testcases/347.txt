@@ -1,0 +1,7 @@
+
+string KH[61.73,86.76,66.27] <- 13.0
+string UP[68.76,56.15] <- false
+func h2W (number FaA3[37.36,38.54], bool LdY2, number RP)
+	return
+
+bool oJ6 <- 58.87

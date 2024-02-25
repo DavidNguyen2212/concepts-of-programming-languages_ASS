@@ -1,11 +1,10 @@
 
-            func main()
-                begin
-                    if (true) return 1
-                end
-            func main()
-                begin
-                    if (true) return 2
-                    else return 3
-                end
-        
+var hD <- Dx
+func KT3 (number M5Pk[9.81], bool vPE8, bool vO)
+	begin
+		continue
+	end
+
+func gZfY (string KQa[35.52,12.0,6.81])
+	return ZaP
+string I3c[65.71,98.57] <- sLEc

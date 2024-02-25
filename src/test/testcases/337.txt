@@ -1,0 +1,10 @@
+
+func JgVP (bool RUSq[73.33,3.5,17.46], bool es, string pGkN[21.22,91.5])
+	return
+string iVW[6.25,28.59,63.23] <- false
+func IFkY (bool vx)	begin
+		QpJ(35.12)
+	end
+
+var z8 <- true
+bool Rhe

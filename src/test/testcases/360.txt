@@ -1,0 +1,13 @@
+
+func Npt9 (number tcR, string C0F5, bool vX[20.24,42.43])
+	begin
+		begin
+			dynamic Xk <- false
+		end
+		begin
+		end
+	end
+
+func RUT (number s8L[86.4,1.03], string KS, number wA[72.74,54.14])
+	return
+number a0zM[49.12,83.83,64.04]

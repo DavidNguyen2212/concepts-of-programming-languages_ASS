@@ -1,0 +1,10 @@
+
+dynamic adf <- false
+number AWc
+func lp (string ci_h, string fI[7.44,70.64,64.28])
+	begin
+		continue
+	end
+
+dynamic aX
+number yR9[50.64,24.81]

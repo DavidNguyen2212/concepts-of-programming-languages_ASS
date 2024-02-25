@@ -1,0 +1,1 @@
+Program([VarDecl(Id(WO3Z), ArrayType([11.26, 24.02, 57.33], NumberType), None, StringLit(ihoD))])

@@ -1,6 +1,9 @@
-from main.zcode.parser.ZCodeVisitor import ZCodeVisitor
-from main.zcode.parser.ZCodeParser import ZCodeParser
-from main.zcode.utils.AST import *
+# from main.zcode.parser.ZCodeVisitor import ZCodeVisitor
+# from main.zcode.parser.ZCodeParser import ZCodeParser
+# from main.zcode.utils.AST import *
+from ZCodeVisitor import ZCodeVisitor
+from ZCodeParser import ZCodeParser
+from AST import *
 
 
 class ASTGeneration(ZCodeVisitor):
@@ -99,14 +102,15 @@ class ASTGeneration(ZCodeVisitor):
             return [float(ctx.NUM_LIT().getText())]
         return [float(ctx.NUM_LIT().getText())] + self.visit(ctx.dim_list())
 
-
     # array_ele		: (ID | fun_call) LS index_ops RS;
     def visitArray_ele(self, ctx:ZCodeParser.Array_eleContext):
         if ctx.ID():
-            return ArrayCell(CallExpr(Id(ctx.ID().getText()), []), self.visit(ctx.index_ops(0)))
-        return ArrayCell(self.visit(ctx.fun_call()), self.visit(ctx.index_ops(0)))
+            return ArrayCell(Id(ctx.ID().getText()), self.visit(ctx.index_ops()))
+        return ArrayCell(self.visit(ctx.fun_call()), self.visit(ctx.index_ops()))
         
-    # many
+    # stmt			: block_stmt | if_stmt | for_stmt 
+	#			| assign_stmt | continue_stmt | break_stmt
+	#			| return_stmt | (fun_call ignore) | vars_decl;
     def visitStmt(self, ctx:ZCodeParser.StmtContext):
         if ctx.block_stmt():
             return self.visit(ctx.block_stmt())
@@ -144,7 +148,7 @@ class ASTGeneration(ZCodeVisitor):
             return [self.visit(ctx.stmt())]
         return [self.visit(ctx.stmt())] + self.visit(ctx.stmtprime())
     
-    # Tách If thành 2 phần để tránh nhập nhằng
+    # Tách If thành 2 phần 
     # if_stmt : IF exp statement elif_list (ELSE statement)?;
     def visitIf_stmt(self, ctx: ZCodeParser.If_stmtContext):
         if not ctx.ELSE():
@@ -185,7 +189,7 @@ class ASTGeneration(ZCodeVisitor):
 
     # return_stmt		: RETURN exp? ignore;
     def visitReturn_stmt(self, ctx:ZCodeParser.Return_stmtContext):
-        if ctx.getChildCount() == 2:
+        if not ctx.exp():
             return Return()
         return Return(self.visit(ctx.exp()))
 
@@ -276,10 +280,10 @@ class ASTGeneration(ZCodeVisitor):
         if ctx.getChildCount() == 1:
             return self.visit(ctx.exp8())
         elif ctx.getChildCount() == 4:
-            return ArrayCell(Id(ctx.ID().getText()), self.visit(ctx.index_ops()[0]))
+            return ArrayCell(Id(ctx.ID().getText()), self.visit(ctx.index_ops(0)))
         elif len(ctx.index_ops()) == 2:
-            return ArrayCell(CallExpr(Id(ctx.ID().getText()), self.visit(ctx.index_ops()[0])), self.visit(ctx.index_ops()[1]))
-        return ArrayCell(CallExpr(Id(ctx.ID().getText()), []), self.visit(ctx.index_ops()[0]))
+            return ArrayCell(CallExpr(Id(ctx.ID().getText()), self.visit(ctx.index_ops(0))), self.visit(ctx.index_ops(1)))
+        return ArrayCell(CallExpr(Id(ctx.ID().getText()), []), self.visit(ctx.index_ops(0)))
 
     # exp8		: array_val | LP exp RP | ID | fun_call;
     def visitExp8(self, ctx:ZCodeParser.Exp8Context):
@@ -292,7 +296,7 @@ class ASTGeneration(ZCodeVisitor):
         else:
             return self.visit(ctx.fun_call())
 
-    # array_val 	: array_list | NUM_LIT | BOO_LIT | STR_LIT;
+    # array_val 	: array_list | NUM_LIT | TRUE | FALSE | STR_LIT;
     def visitArray_val(self, ctx: ZCodeParser.Array_valContext):
         if ctx.NUM_LIT():
             return NumberLiteral(float(ctx.NUM_LIT().getText()))

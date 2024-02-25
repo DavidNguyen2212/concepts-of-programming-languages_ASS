@@ -1,1 +1,1 @@
-Program([FuncDecl(Id(main), [], None)])
+Program([FuncDecl(Id(LZ), [VarDecl(Id(RG1U), ArrayType([32.82], StringType), None, None), VarDecl(Id(mXU), ArrayType([86.87], NumberType), None, None), VarDecl(Id(FID), StringType, None, None)], Return())])

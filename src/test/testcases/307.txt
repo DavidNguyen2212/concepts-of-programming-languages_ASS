@@ -1,3 +1,5 @@
 
-            var Votien <- 1
-        
+func zv (number mYVi)	begin
+		By7x("uVdeP", true, true)
+		return
+	end

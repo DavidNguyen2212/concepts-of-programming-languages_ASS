@@ -1,6 +1,2 @@
 
-            var x <- 1
-            var x <- "123"
-            var x <- true
-            var x <- false
-        
+number z8[99.16,74.92,22.44]

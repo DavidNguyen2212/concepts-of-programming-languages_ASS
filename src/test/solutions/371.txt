@@ -1,0 +1,1 @@
+Program([VarDecl(Id(ESsl), None, var, BooleanLit(True)), VarDecl(Id(Tj3), ArrayType([34.7], NumberType), None, Id(zcyD)), VarDecl(Id(Tb9), ArrayType([85.25, 24.94, 87.8], NumberType), None, None)])

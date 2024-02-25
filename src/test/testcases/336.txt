@@ -1,0 +1,10 @@
+
+func HR ()
+	return 41.56
+
+func qlA (bool sXH, string CB[41.14,50.3,52.75], number Soww)
+	begin
+	end
+
+var ntK1 <- "nA"
+string WK[87.41] <- "l"

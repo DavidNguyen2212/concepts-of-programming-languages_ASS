@@ -1,0 +1,6 @@
+
+string KhY3[56.73] <- "I"
+string ZGeW[96.73,34.96,5.19]
+number vce_ <- 97.34
+number VWa[80.8,52.7] <- aqVW
+string Q_Q[11.6,84.5,24.49] <- vz16

@@ -1,0 +1,11 @@
+
+func rL0 (bool Dk[69.54,45.72,15.33], bool ouk[45.81,26.47], number DmE0[60.59])	begin
+	end
+func zV ()	begin
+		var jChv <- 58.92
+		gG1B(BRqn)
+	end
+
+func DL ()	return
+func kp (string wEJ)	return
+

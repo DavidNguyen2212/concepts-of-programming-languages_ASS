@@ -1,9 +1,4 @@
 
-            func main()
-                begin
-                    return  1 + 1
-                    return
-                end
-            func main()
-                return 1
-        
+dynamic Jr <- Hji
+number B_
+string j8

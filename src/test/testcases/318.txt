@@ -1,3 +1,20 @@
 
-            var x <- fun()
-        
+func om (bool Iul, number pjh[86.73], string Cly)
+	return true
+func fvuO (string T4P9[2.27,62.39], string zNYM, number wjS[33.8,5.92])	return "wyQXJ"
+
+func FQMQ (string BMN[94.15,57.17,21.52])
+	return "uvpsH"
+func YPcg (string AEwL, string eMR)
+	begin
+		break
+		if ("Alaj") continue
+		elif (true) qva()
+		elif (vDA) return "sjvoq"
+		elif (89.51) GrQ[true, "jObbh", 85.59] <- "g"
+		elif (OF)
+		return
+		elif (sp) jnY("v")
+		O1(false, false)
+	end
+number lMor[3.2]

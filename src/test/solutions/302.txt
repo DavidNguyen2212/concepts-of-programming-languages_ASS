@@ -1,1 +1,1 @@
-Program([VarDecl(Id(VoTien), StringType, None, NumLit(1.0))])
+Program([VarDecl(Id(c7b), StringType, None, None), FuncDecl(Id(sid2), [VarDecl(Id(AO), BoolType, None, None), VarDecl(Id(SsIh), ArrayType([86.68], BoolType), None, None)], Return(NumLit(16.18))), FuncDecl(Id(tydf), [VarDecl(Id(TyC), NumberType, None, None), VarDecl(Id(EcE0), BoolType, None, None), VarDecl(Id(bZ_), ArrayType([95.13, 39.56], BoolType), None, None)], Return()), FuncDecl(Id(Ki), [], Return(StringLit(P))), VarDecl(Id(hl), ArrayType([36.16, 7.04], NumberType), None, None)])

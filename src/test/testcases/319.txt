@@ -1,3 +1,7 @@
 
-            var x <- fun(1+1, "a")
-        
+number QP[13.25]
+number Ia[35.74] <- "CP"
+string XC
+func gM (number i4, bool Pjba[61.32,15.44,29.65])
+	return
+dynamic sv

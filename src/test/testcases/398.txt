@@ -1,0 +1,12 @@
+
+var QH <- false
+func YLho (number Ly, bool cOB[36.22,26.74], string MAY)	return 70.46
+
+string Qt[22.91]
+func UDdo (bool sfH)
+	begin
+		for kC until false by true
+			return
+		break
+		number Lpw[33.59,43.9]
+	end

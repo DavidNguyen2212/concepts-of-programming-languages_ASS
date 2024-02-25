@@ -1,0 +1,7 @@
+
+func mpqE ()	begin
+		number X_[49.16,72.42] <- 50.41
+		var tU <- "Zh"
+		KuKc(5.04)
+	end
+

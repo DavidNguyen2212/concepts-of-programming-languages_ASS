@@ -1,0 +1,7 @@
+
+func ez6 (string uAp, string mp)	begin
+		break
+	end
+
+func sl (bool k2)
+	return ghg

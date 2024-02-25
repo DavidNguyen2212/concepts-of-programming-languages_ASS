@@ -1,3 +1,11 @@
 
-            string VoTien <- 1
-        
+string c7b
+func sid2 (bool AO, bool SsIh[86.68])	return 16.18
+
+func tydf (number TyC, bool EcE0, bool bZ_[95.13,39.56])
+	return
+
+func Ki ()
+	return "P"
+
+number hl[36.16,7.04]

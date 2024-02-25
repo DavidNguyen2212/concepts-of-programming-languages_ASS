@@ -1,14 +1,9 @@
 
-            func main()
-                begin
-                    for i until i > 2 by 1 + 1
-                        print(1)
-                end
-            func main()
-                begin
-                    for i until i by [1]
-                    begin
-                        print(1)
-                    end
-                end
-        
+func VeVg (bool lr[28.26,10.73], string gIm, string yx[99.01])	return
+
+func kYY (string S3X, string kve[18.01,21.63])	begin
+		begin
+			continue
+		end
+		fLX(50.28, "fJmAV", true)
+	end

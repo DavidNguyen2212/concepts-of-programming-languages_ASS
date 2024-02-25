@@ -1,0 +1,5 @@
+
+number ItZ[63.58] <- 78.6
+string wp
+number bwY[42.7]
+string P2W[98.29,50.48,0.96]

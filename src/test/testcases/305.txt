@@ -1,4 +1,6 @@
 
-            number VoTien[5,3,4.2] <- 1
-            bool VoTien[2,3,4]
-        
+func Kmy (string PYRA[4.34])
+	return "PN"
+func ftS (string isA[71.7], number ZIz[20.79,15.49], bool yn)	return false
+func eM (bool Hy[3.26])	return
+bool bYts[9.77] <- de9T

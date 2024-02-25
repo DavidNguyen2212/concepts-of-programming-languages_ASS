@@ -1,12 +1,11 @@
 
-            func main()
-                begin
-                    a <- 1
-                    a[1] <- 2
-                    a[3,2] <- 4 + 2
-                end
-            func main()
-                begin
-                a[1+1, 3] <- 1
-                end
-        
+var gsH <- xaIc
+func Fb7 (number XI[5.51,30.99], bool tPq)
+	begin
+		for Qaqj until true by false
+			break
+		SNf()
+	end
+
+dynamic mDZ <- "ZBElH"
+string Whi

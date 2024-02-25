@@ -1,1 +1,1 @@
-Program([FuncDecl(Id(main), [], Block([Break]))])
+Program([VarDecl(Id(nCi), ArrayType([77.74, 57.84], BoolType), None, None), VarDecl(Id(CS9O), None, dynamic, StringLit(O)), VarDecl(Id(t9), NumberType, None, Id(Zkki))])

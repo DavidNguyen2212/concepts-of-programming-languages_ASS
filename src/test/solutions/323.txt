@@ -1,1 +1,1 @@
-Program([FuncDecl(Id(main), [], Block([Continue, Continue, Break, Block([Continue, Continue, Break])]))])
+Program([FuncDecl(Id(Zuc), [VarDecl(Id(gBst), ArrayType([11.91, 16.55], NumberType), None, None)], Return()), FuncDecl(Id(pXH), [VarDecl(Id(TbA), ArrayType([71.58], StringType), None, None)], Return(StringLit(IkT)))])

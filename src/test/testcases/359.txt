@@ -1,0 +1,5 @@
+
+bool FRJ <- 29.68
+string mwhX <- "D"
+func ZX (string V8OI)	return
+

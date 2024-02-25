@@ -1,6 +1,4 @@
 
-            func main(number a)
-            func main(number a, string a, bool a[2])
-            func main(number Votien[1,2])
-                return
-        
+func Yp50 (number bOcH[41.14,2.16], number l0, string X1D)
+	return
+dynamic Xc <- 83.84

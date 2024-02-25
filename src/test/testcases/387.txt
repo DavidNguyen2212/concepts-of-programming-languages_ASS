@@ -1,0 +1,6 @@
+
+func xpry (bool zZg, bool Qp)	begin
+	end
+
+bool R1h[67.91,62.82] <- Tw
+string kZe <- Al8

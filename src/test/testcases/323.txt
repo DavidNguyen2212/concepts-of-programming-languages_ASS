@@ -1,13 +1,4 @@
 
-            func main()
-                begin
-                    continue
-                    continue
-                    break
-                    begin
-                        continue
-                        continue
-                        break                    
-                    end
-                end
-        
+func Zuc (number gBst[11.91,16.55])	return
+func pXH (string TbA[71.58])	return "IkT"
+

@@ -1,0 +1,5 @@
+
+bool e7 <- "E"
+string yAa <- "ASpv"
+dynamic rr
+bool n1z[84.69] <- "Chk"

@@ -1,0 +1,5 @@
+
+number S1A[87.88,62.8,34.44] <- false
+bool JEn3
+number iF <- pL
+func da (string QL[50.5,73.76], bool Hox)	return pYIp

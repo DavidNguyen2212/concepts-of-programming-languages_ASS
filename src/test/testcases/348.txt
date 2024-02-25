@@ -1,0 +1,10 @@
+
+func Li (string Kj[81.01])
+	return 22.43
+
+func re ()	return
+
+func yl (bool M8[25.51,6.83])	begin
+	end
+var sF <- false
+var gyf <- KW

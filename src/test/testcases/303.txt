@@ -1,6 +1,5 @@
 
-            string Votien
-            bool Votien
-            string Votien <- 1
-            bool Votien <- 1
-        
+func JL (string h1k[12.92,53.25,57.99], string ILVr[47.42,50.55], bool zOp[19.61,27.87,24.58])
+	return 19.49
+
+var RR3 <- blF
