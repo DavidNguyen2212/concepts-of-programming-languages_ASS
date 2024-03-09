@@ -41,7 +41,7 @@ array_ele		: (ID | fun_call) LS index_ops RS;
 // Statements
 stmt			: block_stmt | if_stmt | for_stmt 
 				| assign_stmt | continue_stmt | break_stmt
-				| return_stmt | (fun_call ignore) | vars_decl;
+				| return_stmt | call_stmt | vars_decl;
 block_stmt 		: BEGIN ignore stmtlist END ignore;
 stmtlist 		: stmtprime | ;
 stmtprime		: stmt stmtprime | stmt; 
@@ -53,6 +53,7 @@ index_ops		: exp | exp COMMA index_ops;
 continue_stmt 	: CONTINUE ignore;
 break_stmt 		: BREAK ignore;
 return_stmt		: RETURN exp? ignore;
+call_stmt		: fun_call ignore;
 
 // Function call
 fun_call		: ID LP index_ops? RP; //| builtins_call;

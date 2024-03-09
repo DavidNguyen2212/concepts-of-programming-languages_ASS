@@ -1,6 +1,6 @@
-# from main.zcode.parser.ZCodeVisitor import ZCodeVisitor
-# from main.zcode.parser.ZCodeParser import ZCodeParser
-# from main.zcode.utils.AST import *
+#from main.zcode.parser.ZCodeVisitor import ZCodeVisitor
+#from main.zcode.parser.ZCodeParser import ZCodeParser
+#from main.zcode.utils.AST import *
 from ZCodeVisitor import ZCodeVisitor
 from ZCodeParser import ZCodeParser
 from AST import *
@@ -110,7 +110,7 @@ class ASTGeneration(ZCodeVisitor):
         
     # stmt			: block_stmt | if_stmt | for_stmt 
 	#			| assign_stmt | continue_stmt | break_stmt
-	#			| return_stmt | (fun_call ignore) | vars_decl;
+	#			| return_stmt | call_stmt | vars_decl;
     def visitStmt(self, ctx:ZCodeParser.StmtContext):
         if ctx.block_stmt():
             return self.visit(ctx.block_stmt())
@@ -126,9 +126,8 @@ class ASTGeneration(ZCodeVisitor):
             return self.visit(ctx.break_stmt())
         elif ctx.return_stmt():
             return self.visit(ctx.return_stmt())
-        elif ctx.fun_call():
-            fun_call_part = self.visit(ctx.fun_call())
-            return CallStmt(fun_call_part.name, fun_call_part.args)
+        elif ctx.call_stmt():
+            return self.visit(ctx.call_stmt())
         else:
             return self.visit(ctx.vars_decl())
 
@@ -192,6 +191,11 @@ class ASTGeneration(ZCodeVisitor):
         if not ctx.exp():
             return Return()
         return Return(self.visit(ctx.exp()))
+
+    # call_stmt		: fun_call ignore;
+    def visitCall_stmt(self, ctx:ZCodeParser.Call_stmtContext):
+        fun_call_part = self.visit(ctx.fun_call())
+        return CallStmt(fun_call_part.name, fun_call_part.args)
 
     # fun_call		: ID LP index_ops? RP;
     def visitFun_call(self, ctx:ZCodeParser.Fun_callContext):
