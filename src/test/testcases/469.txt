@@ -1,0 +1,9 @@
+
+            func main() begin
+                dynamic left 
+                dynamic right
+                
+                var c <- 2 * left
+                left <- 1
+            end
+        

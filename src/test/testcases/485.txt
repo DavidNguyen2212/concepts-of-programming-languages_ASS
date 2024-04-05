@@ -1,0 +1,12 @@
+
+            func a()
+            func foo() 
+            func main() begin 
+                number a
+                a()
+            end
+            func foo() 
+                return a()
+            func a() return "1"
+
+        
