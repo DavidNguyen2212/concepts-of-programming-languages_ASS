@@ -1,3 +1,3 @@
 # concepts-of-programming-languages_ASS
-just an assignment
-Python 3.12.1 edition
+## In school we have 4 assignments for this subject. 
+### Each assignment is attached to one branch in this repo. Hope u enjoy it.
