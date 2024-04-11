@@ -17,6 +17,12 @@ class VarZcode(Zcode):
     def __init__(self, typ = None):
         self.typ = typ    
         
+class ArrayZcode(Type):
+    #* eleType: List[Type]
+    #* Type ở đây có thể là Zcode, ArrayZcode, String, bool, number, arraytype
+    def __init__(self, eleType):
+        self.eleType = eleType
+
 class Infer:
     @classmethod
     def inferVar(cls, param, nameToInfer, typeToInfer):
@@ -74,8 +80,8 @@ class StaticChecker(BaseVisitor, Utils):
     
     def visitProgram(self, ast, param):
         #! duyệt qua các biến và hàm toàn cục
-        # for i in ast.decl: self.visit(i, param)
-        reduce(lambda _, ele: self.visit(ele, param), ast.decl, [])
+        for i in ast.decl: self.visit(i, param)
+        # reduce(lambda _, ele: self.visit(ele, param), ast.decl, [])
         
         # No definition for function
         for key, value in self.listFunction[0].items():
