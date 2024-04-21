@@ -1,7 +1,9 @@
 
+            dynamic VoTien
             func a()
-            func main() begin 
-                a()
-            end
-            func a() return 1
+            var x <- VoTien + VoTien * a()
+            func main()
+            func a()
+                return 2
+            number y <- VoTien
         

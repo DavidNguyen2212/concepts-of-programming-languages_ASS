@@ -1,1 +1,1 @@
-No Entry Point
+Type Mismatch In Expression: BinaryOp(>, Id(VoTien), Id(VoTien))

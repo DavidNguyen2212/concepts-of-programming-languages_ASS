@@ -4,6 +4,8 @@ from Utils import Utils
 from StaticError import *
 from functools import reduce
 
+# Author: An Nguyen Duc
+# Nop ngay 21/04/2024
 class Zcode:
     pass
 
@@ -18,8 +20,7 @@ class VarZcode(Zcode):
         self.typ = typ    
         
 class ArrayZcode(Type):
-    #* eleType: List[Type]
-    #* Type ở đây có thể là Zcode, ArrayZcode, String, bool, number, arraytype
+    #* eleType: List[Type], Type ở đây có thể là Zcode, ArrayZcode
     def __init__(self, eleType):
         self.eleType = eleType
 
@@ -77,11 +78,40 @@ class StaticChecker(BaseVisitor, Utils):
             return all(list(map(self.compareType, listLHS, listRHS)))
         return False 
     
-    
+    def setTypeArray(self, typeArray, arrayZcode, param = None):
+        #* Trường hợp size khác nhau
+        # TH 1 chiều
+        if typeArray.size[0] != len(arrayZcode.value):
+            return False
+
+        if len(typeArray.size) == 1:
+            for member in arrayZcode.value:
+                member_type = self.visit(member, param)
+                if isinstance(member_type, Zcode):
+                    if type(member_type) is VarZcode:
+                        Infer.inferVar(param, member.name, typeArray.eleType)
+                    elif type(member_type) is FuncZcode:
+                        Infer.inferFunc(self.listFunction, member.name.name, typeArray.eleType)
+                if isinstance(member_type, ArrayZcode):
+                    return False
+            
+        else:
+            for member in arrayZcode.value:
+                member_type = self.visit(member, param)
+                if isinstance(member_type, Zcode):
+                    if type(member_type) is VarZcode:
+                        member_type = Infer.inferVar(param, member.name, ArrayType(typeArray.size[1:], typeArray.eleType))
+                    elif type(member_type) is FuncZcode:
+                        member_type = Infer.inferFunc(self.listFunction, member.name.name, ArrayType(typeArray.size[1:], typeArray.eleType))
+                if isinstance(member_type, ArrayZcode):
+                    self.setTypeArray(ArrayType(typeArray.size[1:], typeArray.eleType), member, param)
+
+        return True
+
     def visitProgram(self, ast, param):
         #! duyệt qua các biến và hàm toàn cục
-        for i in ast.decl: self.visit(i, param)
-        # reduce(lambda _, ele: self.visit(ele, param), ast.decl, [])
+        # for i in ast.decl: self.visit(i, param)
+        reduce(lambda _, ele: self.visit(ele, param), ast.decl, [])
         
         # No definition for function
         for key, value in self.listFunction[0].items():
@@ -114,6 +144,29 @@ class StaticChecker(BaseVisitor, Utils):
             (type(left_type) is FuncZcode and type(right_type) is FuncZcode):
                 raise TypeCannotBeInferred(ast)
             
+            elif isinstance(left_type, Zcode) and isinstance(right_type, ArrayZcode):
+                raise TypeCannotBeInferred(ast)
+
+            elif not isinstance(left_type, Zcode) and isinstance(right_type, ArrayZcode):
+                if type(left_type) in [BoolType, NumberType, StringType]:
+                    raise TypeMismatchInStatement(ast)
+                
+                if type(left_type) is ArrayType: 
+                    setResult = self.setTypeArray(left_type, ast.varInit, param)
+
+                    if not setResult:
+                        raise TypeMismatchInStatement(ast)
+                    else:
+                        right_type = self.visit(ast.varInit, param)
+                
+            elif isinstance(right_type, ArrayType) and type(right_type.eleType) is VarZcode:
+                if type(left_type) is NumberType:
+                    right_type.eleType = left_type
+                    right_type = Infer.inferVar(param, ast.varInit.arr.name, right_type)
+                    right_type = left_type
+                elif type(left_type) is VarZcode:
+                    raise TypeCannotBeInferred(ast)
+
             # Vế phải ZCode => gọi hàm suy diễn cho mỗi TH (infer Biến / infer Hàm)
             elif isinstance(right_type, Zcode):
                 if type(right_type) is VarZcode:
@@ -122,16 +175,16 @@ class StaticChecker(BaseVisitor, Utils):
                     right_type = Infer.inferFunc(self.listFunction, ast.varInit.name.name, left_type)
 
             # Vế trái ZCode => gọi hàm suy diễn cho biến, còn hàm thì không cho phép
-            elif isinstance(left_type, Zcode):
+            elif isinstance(left_type, Zcode) and type(left_type) is not ArrayZcode:
                 if type(left_type) is VarZcode:
                     left_type = Infer.inferVar(param, ast.name.name, right_type)
                 else:
                     raise TypeCannotBeInferred(ast)
 
             # Kiểu đã nhận biết được ở 2 vế
-            elif not self.compareType(left_type, right_type):
+            if not self.compareType(left_type, right_type):
                 raise TypeMismatchInStatement(ast)
-        
+
         # Nếu không tồn tại var Init
         else:
             # có thể là hoặc dynamic
@@ -171,10 +224,6 @@ class StaticChecker(BaseVisitor, Utils):
 
         # Nếu method đã tồn tại trước khi khai báo 1 phần => Kiểm tra lại tham số có giống không
         if type(func) is FuncZcode and not func.body:
-            # print("Func: ", func.param)
-            # print("Type param: ", typeParam)
-            # print("Type param: ", func.param[0])
-
             if not self.compareListType(func.param, typeParam):
                 raise Redeclared(Function(), ast.name.name)
         
@@ -234,6 +283,10 @@ class StaticChecker(BaseVisitor, Utils):
             # RHS trả về một VarZcode -> dynamic -> cần infer nó
             if isinstance(RHS, VarZcode):
                 RHS = Infer.inferVar(param, listRHS[i].name, LHS)
+            if isinstance(RHS, ArrayZcode):
+                set_result = self.setTypeArray(LHS, listRHS[i], param)
+                if set_result:
+                    RHS = LHS
             if not self.compareType(LHS, RHS):
                 raise TypeMismatchInExpression(ast)
             
@@ -266,6 +319,10 @@ class StaticChecker(BaseVisitor, Utils):
             # RHS trả về một VarZcode -> dynamic -> cần infer nó
             if isinstance(RHS, VarZcode):
                 RHS = Infer.inferVar(param, listRHS[i].name, LHS)
+            if isinstance(RHS, ArrayZcode):
+                set_result = self.setTypeArray(LHS, listRHS[i], param)
+                if set_result:
+                    RHS = LHS
             if not self.compareType(LHS, RHS):
                 raise TypeMismatchInStatement(ast)
             
@@ -273,9 +330,7 @@ class StaticChecker(BaseVisitor, Utils):
             funcDecl.typ = VoidType()
             return funcDecl.typ
         if not self.compareType(funcDecl.typ, VoidType()):
-            raise TypeMismatchInStatement(ast)
-        # return funcDecl.typ
-    
+            raise TypeMismatchInStatement(ast)    
 
     def visitIf(self, ast, param):
         # Kiểm tra điều kiện If
@@ -321,20 +376,18 @@ class StaticChecker(BaseVisitor, Utils):
         if isinstance(RHS, VarZcode):
             RHS = Infer.inferVar(param, ast.condExpr.name, LHS)
         elif isinstance(RHS, FuncZcode):
-            RHS.typ = BoolType()
-            # RHS = Infer.inferVar(param, ast.condExpr.name, LHS)
+            RHS = Infer.inferFunc(self.listFunction, ast.condExpr.name.name, LHS)
         elif not self.compareType(LHS, RHS):
             raise TypeMismatchInStatement(ast)
         
         # Upd expr
         LHS = NumberType()
         RHS = self.visit(ast.updExpr, param)
-        # print("RHS: ", ast.name)
         if isinstance(RHS, VarZcode):
             RHS = Infer.inferVar(param, ast.updExpr.name, LHS)
         elif isinstance(RHS, FuncZcode):
-            RHS.typ = NumberType()
-        elif not self.compareType(LHS, RHS):
+            RHS = Infer.inferFunc(self.listFunction, ast.condExpr.name.name, LHS)
+        if not self.compareType(LHS, RHS):
             raise TypeMismatchInStatement(ast)
         
         self.BlockFor += 1 #! vào trong vòng for nào anh em
@@ -343,6 +396,40 @@ class StaticChecker(BaseVisitor, Utils):
     
 
     def visitReturn(self, ast, param):
+        # Return lần 2
+        if self.Return == True:
+            LHS = self.function.typ
+            RHS = self.visit(ast.expr, param)
+            if isinstance(RHS, Type) and LHS is None:
+                if type(RHS) is not VoidType:
+                    self.function.typ = RHS
+                    return
+                else:
+                    raise TypeCannotBeInferred(ast)
+            if isinstance(RHS, Zcode) and LHS is not None:
+                if type(RHS) is VarZcode:
+                    RHS = Infer.inferVar(param, ast.expr.name, LHS)
+                else:
+                    RHS = Infer.inferFunc(self.listFunction, ast.expr.name.name, LHS)
+                return
+            elif isinstance(RHS, Zcode) and LHS is None:
+                if type(RHS) is VarZcode:
+                    raise TypeCannotBeInferred(ast)
+                elif RHS.typ is not None:
+                    RHS = Infer.inferFunc(self.listFunction, ast.expr.name.name, RHS.typ)
+                    LHS = RHS
+                    self.function.typ = RHS
+                else:
+                    raise TypeCannotBeInferred(ast)
+            elif isinstance(RHS, ArrayZcode):
+                set_result = self.setTypeArray(LHS, ast.expr, param)
+                if set_result:
+                    return
+                else:
+                    raise TypeMismatchInStatement(ast)
+            if not self.compareType(LHS, RHS):
+                raise TypeMismatchInStatement(ast)
+            return 
         if ast.expr is None:
             self.function.typ = VoidType()
             self.Return = False
@@ -350,14 +437,11 @@ class StaticChecker(BaseVisitor, Utils):
             self.Return = True
             LHS = self.function.typ
             RHS = self.visit(ast.expr, param)
-            print("lhs: ", LHS)
-            print("rhs: ", RHS)
             if isinstance(RHS, Type) and LHS is None:
-                if type(RHS) is not VoidType:
+                if type(RHS) not in [VoidType, ArrayZcode] :
                     self.function.typ = RHS
                     return
                 else:
-                    print("CCChj")
                     raise TypeCannotBeInferred(ast)
             if isinstance(RHS, Zcode) and LHS is not None:
                 if type(RHS) is VarZcode:
@@ -381,41 +465,59 @@ class StaticChecker(BaseVisitor, Utils):
     def visitAssign(self, ast, param):
         LHS = self.visit(ast.lhs, param)
         RHS = self.visit(ast.rhs, param)
-        # print("lhs: ", LHS)
-        # print("rhs: ", RHS)
+
         if isinstance(LHS, Zcode) and isinstance(RHS, Zcode):
             raise TypeCannotBeInferred(ast)
-        elif type(LHS) is VarZcode:
-            for env in param:
-                if ast.lhs.name in env.keys(): 
-                    env[ast.lhs.name] = RHS
-                    break
-        elif type(RHS) is VarZcode:
-            for env in param:
-                if ast.rhs.name in env.keys(): 
-                    env[ast.rhs.name] = LHS
-                    break
-        elif not self.compareType(LHS, RHS):
+        if isinstance(LHS, Zcode) and isinstance(RHS, ArrayZcode):
+            raise TypeCannotBeInferred(ast)
+        if isinstance(LHS, ArrayZcode) and isinstance(RHS, Zcode):
+            raise TypeCannotBeInferred(ast)
+        if isinstance(LHS, ArrayZcode) and isinstance(RHS, ArrayZcode):
+            raise TypeCannotBeInferred(ast)
+
+        if type(LHS) is VarZcode:
+            LHS = Infer.inferVar(param, ast.lhs.name, RHS)
+            RHS = self.visit(ast.rhs, param)
+        if isinstance(RHS, Zcode):
+            if type(RHS) is VarZcode:
+                RHS = Infer.inferVar(param, ast.rhs.name, LHS)
+            elif type(RHS) is FuncZcode:
+                RHS = Infer.inferFunc(self.listFunction, ast.rhs.name.name, LHS)
+            LHS = self.visit(ast.lhs, param)
+
+        if not self.compareType(LHS, RHS):
             raise TypeMismatchInStatement(ast)
 
-    def visitBinaryOp(self, ast, param):      
+    def visitBinaryOp(self, ast, param): 
         left_type = self.visit(ast.left, param)
         right_type = self.visit(ast.right, param)
 
         if ast.op in ['+', '-', '*', '/', '%']:
             if isinstance(left_type, Zcode):
                 left_type = Infer.inferVar(param, ast.left.name, NumberType())
+                right_type = self.visit(ast.right, param)
+
             if isinstance(right_type, Zcode): 
-                right_type = Infer.inferVar(param, ast.right.name, NumberType())
+                if type(right_type) is VarZcode:
+                    right_type = Infer.inferVar(param, ast.right.name, NumberType())
+                elif type(right_type) is FuncZcode:
+                    right_type = Infer.inferFunc(self.listFunction, ast.right.name.name, NumberType())
+                left_type = self.visit(ast.left, param)
+
             if type(left_type) is NumberType and type(right_type) is NumberType:
                 return NumberType()
             raise TypeMismatchInExpression(ast)
 
         elif ast.op in ['and', 'or']:
-            if isinstance(left_type, Zcode):
+            if isinstance(left_type, VarZcode):
                 left_type = Infer.inferVar(param, ast.left.name, BoolType())
-            if isinstance(right_type, Zcode):
-                right_type = Infer.inferVar(param, ast.right.name, BoolType())
+                right_type = self.visit(ast.right, param)
+            if isinstance(right_type, Zcode): 
+                if type(right_type) is VarZcode:
+                    right_type = Infer.inferVar(param, ast.right.name, BoolType())
+                elif type(right_type) is FuncZcode:
+                    right_type = Infer.inferFunc(self.listFunction, ast.right.name.name, BoolType())
+                left_type = self.visit(ast.left, param)
             if type(left_type) is BoolType and type(right_type) is BoolType:
                 return BoolType()
             raise TypeMismatchInExpression(ast)
@@ -423,8 +525,13 @@ class StaticChecker(BaseVisitor, Utils):
         elif ast.op == '...':
             if isinstance(left_type, Zcode):
                 left_type = Infer.inferVar(param, ast.left.name, StringType())
-            if isinstance(right_type, Zcode):
-                right_type = Infer.inferVar(param, ast.right.name, StringType())
+                right_type = self.visit(ast.right, param)
+            if isinstance(right_type, Zcode): 
+                if type(right_type) is VarZcode:
+                    right_type = Infer.inferVar(param, ast.right.name, StringType())
+                elif type(right_type) is FuncZcode:
+                    right_type = Infer.inferFunc(self.listFunction, ast.right.name.name, StringType())
+                left_type = self.visit(ast.left, param)
             if type(left_type) is StringType and type(right_type) is StringType:
                 return StringType()
             raise TypeMismatchInExpression(ast)
@@ -432,8 +539,13 @@ class StaticChecker(BaseVisitor, Utils):
         elif ast.op in ['=', '!=', '<', '>', '>=', '<=']:
             if isinstance(left_type, Zcode):
                 left_type = Infer.inferVar(param, ast.left.name, NumberType())
+                right_type = self.visit(ast.right, param)
             if isinstance(right_type, Zcode): 
-                right_type = Infer.inferVar(param, ast.right.name, NumberType())
+                if type(right_type) is VarZcode:
+                    right_type = Infer.inferVar(param, ast.right.name, NumberType())
+                elif type(right_type) is FuncZcode:
+                    right_type = Infer.inferFunc(self.listFunction, ast.right.name.name, NumberType())
+                left_type = self.visit(ast.left, param)
             if type(left_type) is NumberType and type(right_type) is NumberType:
                 return BoolType()
             raise TypeMismatchInExpression(ast)
@@ -441,8 +553,13 @@ class StaticChecker(BaseVisitor, Utils):
         elif ast.op == '==':
             if isinstance(left_type, Zcode):
                 left_type = Infer.inferVar(param, ast.left.name, StringType())
-            if isinstance(right_type, Zcode):
-                right_type = Infer.inferVar(param, ast.right.name, StringType())
+                right_type = self.visit(ast.right, param)
+            if isinstance(right_type, Zcode): 
+                if type(right_type) is VarZcode:
+                    right_type = Infer.inferVar(param, ast.right.name, StringType())
+                elif type(right_type) is FuncZcode:
+                    right_type = Infer.inferFunc(self.listFunction, ast.right.name.name, StringType())
+                left_type = self.visit(ast.left, param)
             if type(left_type) is StringType and type(right_type) is StringType:
                 return BoolType()
             raise TypeMismatchInExpression(ast)
@@ -453,14 +570,20 @@ class StaticChecker(BaseVisitor, Utils):
 
         if ast.op in ['+', '-']:
             if isinstance(this_type, Zcode):
-                this_type = Infer.inferVar(param, ast.operand.name, NumberType())
+                if type(this_type) is VarZcode:
+                    this_type = Infer.inferVar(param, ast.operand.name, NumberType())
+                elif type(this_type) is FuncZcode:
+                    this_type = Infer.inferFunc(self.listFunction, ast.operand.name.name, NumberType())
             if type(this_type) is NumberType:
                 return NumberType()
             raise TypeMismatchInExpression(ast)
 
         elif ast.op in ['not']:
             if isinstance(this_type, Zcode):
-                this_type = Infer.inferVar(param, ast.operand.name, BoolType())
+                if type(this_type) is VarZcode:
+                    this_type = Infer.inferVar(param, ast.operand.name, BoolType())
+                elif type(this_type) is FuncZcode:
+                    this_type = Infer.inferFunc(self.listFunction, ast.operand.name.name, BoolType())
             if type(this_type) is BoolType():
                 return BoolType()
             raise TypeMismatchInExpression(ast)
@@ -468,18 +591,31 @@ class StaticChecker(BaseVisitor, Utils):
 
     def visitArrayCell(self, ast, param):
         arrType = self.visit(ast.arr, param)
-        if type(arrType) is not ArrayType:
+        if type(arrType) is not ArrayType and not isinstance(arrType, Zcode):
             raise TypeMismatchInExpression(ast)
  
         LHS = NumberType()
         for i in range(len(ast.idx)):
             RHS = self.visit(ast.idx[i], param)
             if isinstance(RHS, Zcode):
-                RHS = Infer.inferVar(param, ast.idx[i].name, NumberType())
+                if type(RHS) is VarZcode:
+                    RHS = Infer.inferVar(param, ast.idx[i].name, NumberType())
+                elif type(RHS) is FuncZcode:
+                    RHS = Infer.inferFunc(self.listFunction, ast.idx[i].name.name, NumberType())
             if not self.compareType(LHS, RHS):
                 raise TypeMismatchInExpression(ast)
         
         left = self.visit(ast.arr, param)
+        if type(left) is VarZcode:
+
+            # return ArrayType(new_size ,left.eleType)
+            idx =  self.visit(ast.idx[0], param)
+            if type(idx) is ArrayType:
+                left = Infer.inferVar(param, ast.arr.name, ArrayType([len(ast.idx)] + idx.size, VarZcode()))
+            else:
+                left = Infer.inferVar(param, ast.arr.name, ArrayType([len(ast.idx)], VarZcode()))
+            return left
+        
         if len(left.size) < len(ast.idx):
             raise TypeMismatchInExpression(ast)
         elif len(left.size) == len(ast.idx):
@@ -488,17 +624,52 @@ class StaticChecker(BaseVisitor, Utils):
             new_size = left.size[len(ast.idx) : ]
             return ArrayType(new_size ,left.eleType)
 
-    """phần này sẽ là cố định do ngắn quá :(( """
     def visitArrayLiteral(self, ast, param):
-        #! code chỉ mang tính tham khảo, do BTL này không yêu cầu lỗi khác nhau ArrayLiteral nên thầy ko cho TypeCannotBeInferred
-        for item in ast.value: self.visit(item, param)
-        typ = self.visit(ast.value[0], param)
-        
-        #! đệ quy
-        if type(typ) in [StringType, BoolType, NumberType]:
+        #* bước 1 chọn được type đã xác định kiểm trong ast.value (typ không phải là Zcode và ArrayZcode)
+        typ = None
+        for item in ast.value:
+            checkTyp = self.visit(item, param)
+            if not (isinstance(checkTyp, Zcode) or isinstance(checkTyp, ArrayZcode)):
+                typ = checkTyp
+                break
+        eleType = []
+        #* Bước 2: xét kiểu từng phần tử
+        #^ TH1 : typ is None nghĩa là trong array chỉ gồm Zcode và ArrayZcode nên return ArrayZcode
+        if typ is None:
+            # TODO implement
+            eleType = reduce(lambda prev, curr: prev + [self.visit(curr, param)], ast.value, [])
+            return ArrayZcode(eleType)
+        #^ TH2 : typ in [StringType, BoolType, NumberType] duyệt qua ast.value nếu typ từng phần tử có ArrayZcode hay là comparType bị khác thì nén TypeMismatchInExpression
+        elif type(typ) in [StringType, BoolType, NumberType]:
+            for expr in ast.value:
+                expr_typ = self.visit(expr, param)
+                if type(expr_typ) is VarZcode:
+                    Infer.inferVar(param, expr.name, typ)
+                    expr_typ = typ
+                elif type(expr_typ) is FuncZcode:
+                    Infer.inferFunc(self.listFunction, expr.name.name, typ)
+                    expr_typ = typ
+                if type(expr_typ) is ArrayZcode or not self.compareType(expr_typ, typ):
+                    raise TypeMismatchInExpression(ast)
             return ArrayType([len(ast.value)], typ)
-        return ArrayType([len(ast.value)] + typ.size, typ.eleType)
-    
+
+        else:
+            for expr in ast.value:
+                expr_typ = self.visit(expr, param)
+                if type(expr_typ) is ArrayZcode:
+                    if self.setTypeArray(typ, expr, param):
+                        expr_typ = typ
+                if type(expr_typ) is VarZcode:
+                    Infer.inferVar(param, expr.name, typ)
+                    expr_typ = typ
+                elif type(expr_typ) is FuncZcode:
+                    Infer.inferFunc(self.listFunction, expr.name.name, typ) 
+                    expr_typ = typ
+                if not self.compareType(expr_typ, typ):
+                    raise TypeMismatchInExpression(ast) 
+            return ArrayType([len(ast.value)] + expr_typ.size, expr_typ.eleType)
+
+
     def visitBlock(self, ast, param):
         for item in ast.stmt:
             #! trường hợp gặp block
